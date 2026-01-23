@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build binaries
+        run: |
+          npx pkg . \
+            --targets node18-macos-x64,node18-macos-arm64,node18-linux-x64,node18-win-x64 \
+            --output dist/qamax-auth \
+            --compress GZip
+
+      - name: Package tarballs
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+
+          # macOS x64
+          mkdir -p dist/qamax-auth-darwin-x64
+          mv dist/qamax-auth-macos-x64 dist/qamax-auth-darwin-x64/qamax-auth
+          chmod +x dist/qamax-auth-darwin-x64/qamax-auth
+          tar -czf dist/qamax-auth-v${VERSION}-darwin-x64.tar.gz -C dist qamax-auth-darwin-x64
+
+          # macOS arm64
+          mkdir -p dist/qamax-auth-darwin-arm64
+          mv dist/qamax-auth-macos-arm64 dist/qamax-auth-darwin-arm64/qamax-auth
+          chmod +x dist/qamax-auth-darwin-arm64/qamax-auth
+          tar -czf dist/qamax-auth-v${VERSION}-darwin-arm64.tar.gz -C dist qamax-auth-darwin-arm64
+
+          # Linux x64
+          mkdir -p dist/qamax-auth-linux-x64
+          mv dist/qamax-auth-linux-x64 dist/qamax-auth-linux-x64/qamax-auth
+          chmod +x dist/qamax-auth-linux-x64/qamax-auth
+          tar -czf dist/qamax-auth-v${VERSION}-linux-x64.tar.gz -C dist qamax-auth-linux-x64
+
+          # Windows x64
+          mkdir -p dist/qamax-auth-win-x64
+          mv dist/qamax-auth-win-x64.exe dist/qamax-auth-win-x64/qamax-auth.exe
+          zip -j dist/qamax-auth-v${VERSION}-win-x64.zip dist/qamax-auth-win-x64/qamax-auth.exe
+
+          # Also create latest symlinks for install script
+          cp dist/qamax-auth-v${VERSION}-darwin-x64.tar.gz dist/qamax-auth-darwin-x64.tar.gz
+          cp dist/qamax-auth-v${VERSION}-darwin-arm64.tar.gz dist/qamax-auth-darwin-arm64.tar.gz
+          cp dist/qamax-auth-v${VERSION}-linux-x64.tar.gz dist/qamax-auth-linux-x64.tar.gz
+          cp dist/qamax-auth-v${VERSION}-win-x64.zip dist/qamax-auth-win-x64.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/qamax-auth-*.tar.gz
+            dist/qamax-auth-*.zip
+            scripts/install.sh
+            scripts/uninstall.sh
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

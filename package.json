@@ -1,0 +1,45 @@
+{
+  "name": "@qamax/auth-capture",
+  "version": "1.0.0",
+  "description": "CLI tool to capture authentication sessions for QualityMax",
+  "main": "index.js",
+  "bin": {
+    "qamax-auth": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js",
+    "build": "bash scripts/build.sh",
+    "prepublishOnly": "npm run build"
+  },
+  "pkg": {
+    "scripts": ["index.js", "lib/**/*.js"],
+    "assets": ["package.json"],
+    "targets": ["node18-macos-x64", "node18-macos-arm64", "node18-linux-x64", "node18-win-x64"],
+    "outputPath": "dist"
+  },
+  "keywords": [
+    "qamax",
+    "auth",
+    "playwright",
+    "testing",
+    "automation"
+  ],
+  "author": "QualityMax",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "chalk": "^4.1.2",
+    "chrome-launcher": "^1.1.0",
+    "chrome-remote-interface": "^0.33.0"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
+  },
+  "optionalDependencies": {
+    "playwright": "^1.40.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
