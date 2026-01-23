@@ -7,7 +7,7 @@ set -e
 INSTALL_DIR="/usr/local/lib/qamax"
 BIN_DIR="/usr/local/bin"
 CLI_NAME="qamax-auth"
-REPO="Quality-Max/qamax-rag-app"
+REPO="Quality-Max/qamax-auth-cli"
 BASE_URL="https://github.com/$REPO/releases/latest/download"
 
 # Colors
