@@ -31,27 +31,33 @@ jobs:
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
 
+          # Rename binaries first (pkg outputs files, we need dirs)
+          mv dist/qamax-auth-macos-x64 dist/bin-darwin-x64
+          mv dist/qamax-auth-macos-arm64 dist/bin-darwin-arm64
+          mv dist/qamax-auth-linux-x64 dist/bin-linux-x64
+          mv dist/qamax-auth-win-x64.exe dist/bin-win-x64.exe
+
           # macOS x64
           mkdir -p dist/qamax-auth-darwin-x64
-          mv dist/qamax-auth-macos-x64 dist/qamax-auth-darwin-x64/qamax-auth
+          mv dist/bin-darwin-x64 dist/qamax-auth-darwin-x64/qamax-auth
           chmod +x dist/qamax-auth-darwin-x64/qamax-auth
           tar -czf dist/qamax-auth-v${VERSION}-darwin-x64.tar.gz -C dist qamax-auth-darwin-x64
 
           # macOS arm64
           mkdir -p dist/qamax-auth-darwin-arm64
-          mv dist/qamax-auth-macos-arm64 dist/qamax-auth-darwin-arm64/qamax-auth
+          mv dist/bin-darwin-arm64 dist/qamax-auth-darwin-arm64/qamax-auth
           chmod +x dist/qamax-auth-darwin-arm64/qamax-auth
           tar -czf dist/qamax-auth-v${VERSION}-darwin-arm64.tar.gz -C dist qamax-auth-darwin-arm64
 
           # Linux x64
           mkdir -p dist/qamax-auth-linux-x64
-          mv dist/qamax-auth-linux-x64 dist/qamax-auth-linux-x64/qamax-auth
+          mv dist/bin-linux-x64 dist/qamax-auth-linux-x64/qamax-auth
           chmod +x dist/qamax-auth-linux-x64/qamax-auth
           tar -czf dist/qamax-auth-v${VERSION}-linux-x64.tar.gz -C dist qamax-auth-linux-x64
 
           # Windows x64
           mkdir -p dist/qamax-auth-win-x64
-          mv dist/qamax-auth-win-x64.exe dist/qamax-auth-win-x64/qamax-auth.exe
+          mv dist/bin-win-x64.exe dist/qamax-auth-win-x64/qamax-auth.exe
           zip -j dist/qamax-auth-v${VERSION}-win-x64.zip dist/qamax-auth-win-x64/qamax-auth.exe
 
           # Also create latest symlinks for install script
