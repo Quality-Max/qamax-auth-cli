@@ -1,5 +1,5 @@
 {
-  "name": "@qamax/auth-capture",
+  "name": "qamax-auth-cli",
   "version": "1.0.0",
   "description": "CLI tool to capture authentication sessions for QualityMax",
   "main": "index.js",
@@ -9,8 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "node test.js",
-    "build": "bash scripts/build.sh",
-    "prepublishOnly": "npm run build"
+    "build": "bash scripts/build.sh"
   },
   "pkg": {
     "scripts": ["index.js", "lib/**/*.js"],
