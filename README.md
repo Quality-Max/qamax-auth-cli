@@ -1,5 +1,7 @@
 # QualityMax Auth Capture CLI
 
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support-yellow?logo=buymeacoffee)](https://buymeacoffee.com/qualitymax)
+
 CLI tool to capture authentication sessions for QualityMax AI crawling.
 
 ## Installation
