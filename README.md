@@ -1,5 +1,9 @@
 # QualityMax Auth Capture CLI
 
+[CLI quickstart](https://docs.qualitymax.io/quickstart-cli/) · [qmax local agent](https://github.com/Quality-Max/qmax-local-agent)
+
+This repository contains the standalone authentication-capture utility. For current QualityMax CLI setup and local execution, start with the qmax quickstart; this utility is separate from qmax-code.
+
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support-yellow?logo=buymeacoffee)](https://buymeacoffee.com/qualitymax)
 
 CLI tool to capture authentication sessions for QualityMax AI crawling.
